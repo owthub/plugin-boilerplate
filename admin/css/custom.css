@@ -1,0 +1,5 @@
+/*This css file contains custom code*/
+#frmAddPlaylists label.error{
+    color:red;
+}
+
