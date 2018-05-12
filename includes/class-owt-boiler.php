@@ -162,7 +162,7 @@ class Owt_Boiler {
                 
                 // ajax request handler
                 $this->loader->add_action("wp_ajax_boiler_request", $plugin_admin, 'owt_ajax_handler_fns');
-
+                
 	}
 
 	/**
@@ -178,7 +178,11 @@ class Owt_Boiler {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+                
+                $this->loader->add_filter( 'page_template', $plugin_public, 'boiler_created_page_template' );
+                
+                add_shortcode("test_shortcode",array($plugin_public,"owt_frontend_page_call"));
+                
 	}
 
 	/**

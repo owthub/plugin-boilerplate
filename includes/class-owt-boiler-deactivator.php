@@ -39,6 +39,12 @@ class Owt_Boiler_Deactivator {
         //drop table code
         global $wpdb;
         $wpdb->query("Drop table IF EXISTS " . $this->table->owtboliertable());
+
+        if (!empty(get_option("boiler_page"))) {
+            $page_id = get_option("boiler_page");
+            wp_delete_post($page_id, true); //wp_posts
+            delete_option("boiler_page"); // wp_options
+        }
     }
 
 }

@@ -54,7 +54,6 @@ function activate_owt_boiler_fn() {
     $activator->activate();
 }
 
-
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-owt-boiler-deactivator.php

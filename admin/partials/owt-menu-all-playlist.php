@@ -1,3 +1,4 @@
+
 <div class="panel panel-primary">
     <div class="panel-heading">All Playlists</div>
     <div class="panel-body">
@@ -11,45 +12,42 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="boiler-table-playlist">
                 <?php
-                global $wpdb;
-                $all_playlists = $wpdb->get_results(
-                        $wpdb->prepare(
-                                "SELECT * from " . $this->tables->owtboliertable() . " Order by id desc", ""
-                        ), ARRAY_A
-                );
-
-
-                if (count($all_playlists) > 0) {
-                    $i = 1;
-                    foreach ($all_playlists as $index => $data) {
-                        
-                        ?>
-                        <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><?php echo $data['name'] ?></td>
-                            <td><img src="<?php echo $data['thumbnail']; ?>" style="height: 80px;width:80px"/></td>
-                            <td>
-                                <?php
-                                   $users_level = (array)json_decode($data['playlist_for']);
-                                   foreach($users_level as $level){
-                                       echo ucfirst($level)." , ";
-                                   }
-                                ?>
-                            </td>
-                            
-                            <td>
-                                <a href="javascipt:void(0)" class="btn btn-info">Edit</a>
-                                <a href="javascipt:void(0)" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                } else {
-                    echo "<h4>No Playlist found</h4>";
-                }
+                   ob_start(); // start the buffer
+                   // include file
+                   
+                   include_once OWT_BOILER_PLAGIN_DIR."/admin/partials/tmpl/plugin-tmpl-playlists.php";
+                   // read the buffer
+                   $template = ob_get_contents();
+                   // close the buffer
+                   ob_end_clean();
+                   
+                   echo $template;
                 ?>
+            </tbody>
         </table>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div id="boiler-edit-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>

@@ -150,6 +150,25 @@ dashicons-admin-plugins", 30);
                 ));
             }
             //$this->tables->owtboliertable();
+        } elseif (!empty($param) && $param == "delete_record_data") {
+            $data_id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
+            $is_exists = $wpdb->get_row(
+                    $wpdb->prepare(
+                            "SELECT * from " . $this->tables->owtboliertable() . " WHERE id = %d", $data_id
+                    ), ARRAY_A
+            );
+            if (!empty($is_exists)) {
+                $wpdb->delete($this->tables->owtboliertable(), array(
+                    "id" => $data_id
+                ));
+                ob_start(); //start
+                include_once OWT_BOILER_PLAGIN_DIR . "/admin/partials/tmpl/plugin-tmpl-playlists.php";
+                $template = ob_get_contents();
+                ob_end_clean(); //end
+                echo json_encode(array("status" => 1, "message" => "Record has deleted", "template" => $template));
+            } else {
+                echo json_encode(array("status" => 0, "message" => "No record found"));
+            }
         }
         wp_die();
     }
